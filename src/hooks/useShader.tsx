@@ -1,18 +1,33 @@
-import { useMemo } from "react";
+import { useMemo, MutableRefObject, useEffect, useCallback } from "react";
+import { createRoot } from "react-dom/client";
 import {
   Scene,
   TextureLoader,
   SpriteMaterial,
   Sprite,
   OrthographicCamera,
+  WebGLRenderer,
 } from "three";
 
+interface UseShaderReturn {
+  viewport: HTMLCanvasElement;
+  renderScene: () => void;
+}
+
+/**
+ * Use a shader.
+ * @param imageURL
+ * @param viewWidth
+ * @param viewHeight
+ * @returns
+ */
 export function useShader(
   imageURL: string,
-  viewHeight: number,
-  viewWidth: number
-) {
-  const renderer = useMemo(() => {
+  viewWidth: number,
+  viewHeight: number
+): UseShaderReturn {
+  // Construct the renderer.
+  const [renderer, scene, camera] = useMemo(() => {
     const scene = new Scene();
     const map = new TextureLoader().load(imageURL);
     const material = new SpriteMaterial({ map: map, color: 0xffffff });
@@ -28,6 +43,17 @@ export function useShader(
       1,
       1000
     );
-  }, [imageURL]);
-  return scene;
+    scene.add(camera);
+    const renderer = new WebGLRenderer();
+    renderer.setSize(viewWidth, viewHeight);
+    return [renderer, scene, camera];
+  }, [imageURL, viewHeight, viewWidth]);
+
+  const renderScene = useCallback(() => {
+    renderer.render(scene, camera);
+  }, [renderer, scene, camera]);
+  return {
+    viewport: renderer.domElement,
+    renderScene: renderScene,
+  };
 }
