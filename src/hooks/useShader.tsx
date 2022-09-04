@@ -9,7 +9,10 @@ import {
   WebGLRenderer,
   Mesh,
   PlaneGeometry,
+  Vector2,
+  Vector3,
 } from "three";
+import { ImageData } from "../types/ImageData";
 
 interface UseShaderReturn {
   viewport: HTMLCanvasElement;
@@ -20,16 +23,22 @@ interface UseShaderReturn {
  * Get the shader to put on the sprite
  * @param imageURL base image for texture.
  */
-function getShaderMaterial(imageURL: string): ShaderMaterial {
+function getShaderMaterial(image: ImageData): ShaderMaterial {
+  const texture = new TextureLoader().load(image.url);
+  const textureWidth = image.width || 1;
+  const textureHeight = image.height || 1;
   const uniforms = {
-    texture: new TextureLoader().load(imageURL),
+    texture,
+    textureResolution: new Vector2(textureWidth, textureHeight),
+    colorChannelBalances: new Vector3(1.0, 1.0, 1.0),
   };
-  console.log(BlackWhiteFragmentationShader);
   return new ShaderMaterial({
     fragmentShader: BlackWhiteFragmentationShader,
-    //    uniforms: {
-    //      originalTexture: { value: uniforms.texture },
-    //    },
+    uniforms: {
+      originalTexture: { value: uniforms.texture },
+      textureResolution: { value: uniforms.textureResolution },
+      colorChannelBalances: { value: uniforms.colorChannelBalances },
+    },
   });
 }
 
@@ -40,33 +49,28 @@ function getShaderMaterial(imageURL: string): ShaderMaterial {
  * @param viewHeight
  * @returns
  */
-export function useShader(
-  imageURL: string,
-  viewWidth: number,
-  viewHeight: number
-): UseShaderReturn {
+export function useShader(image: ImageData): UseShaderReturn {
   // Construct the renderer.
   const [renderer, scene, camera] = useMemo(() => {
     const scene = new Scene();
-    const map = new TextureLoader().load(imageURL);
-    const material = getShaderMaterial(imageURL);
-    const plane = new PlaneGeometry(1, 1);
+    const material = getShaderMaterial(image);
+    const plane = new PlaneGeometry(image.width, image.height);
     scene.add(new Mesh(plane, material));
     // Add the camera.
     const camera = new OrthographicCamera(
-      viewWidth / -2,
-      viewWidth / 2,
-      viewHeight / 2,
-      viewHeight / -2,
+      image.width / -2,
+      image.width / 2,
+      image.height / 2,
+      image.height / -2,
       1,
       1000
     );
     camera.position.z = 5;
     scene.add(camera);
     const renderer = new WebGLRenderer();
-    renderer.setSize(viewWidth, viewHeight);
+    renderer.setSize(image.width, image.height);
     return [renderer, scene, camera];
-  }, [imageURL, viewHeight, viewWidth]);
+  }, [image]);
 
   const renderScene = useCallback(() => {
     requestAnimationFrame(renderScene);

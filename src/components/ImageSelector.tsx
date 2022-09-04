@@ -1,26 +1,16 @@
-import { useCallback } from "react";
+import { useImageUpload } from "../hooks/useImageUpload";
+import { ImageData } from "../types/ImageData";
 
 interface ImageSelectorProps {
-  setImageURL: (url: string) => void;
+  setImage: (data: ImageData) => void;
 }
 
 export function ImageSelector(props: ImageSelectorProps) {
-  const { setImageURL } = props;
-  const setImage = useCallback(
-    (files: FileList | null) => {
-      if (files != null && files.length > 0) {
-        setImageURL(URL.createObjectURL(files[0]));
-      }
-    },
-    [setImageURL]
-  );
+  const { setImage } = props;
+  const { onUpload } = useImageUpload(setImage);
   return (
     <div className="image-selector">
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => setImage(e.target.files)}
-      ></input>
+      <input type="file" accept="image/*" onChange={onUpload}></input>
     </div>
   );
 }
