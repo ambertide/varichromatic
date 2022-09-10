@@ -32,6 +32,7 @@ export function RangeSelector({
         <legend>{label}</legend>
         <div className="input-group">
           <input
+            className="range-slider"
             type="range"
             name={name}
             value={value}
@@ -41,6 +42,7 @@ export function RangeSelector({
             step={0.1}
           />
           <input
+            className="range-number"
             type="number"
             name={name}
             value={value}

@@ -5,7 +5,10 @@ function App() {
   return (
     <div className="App">
       <main className="app-wrapper">
-        <section className="explanation" id="panchromatic-history">
+        <section className="card" id="title">
+          <h1>Varichromatic</h1>
+        </section>
+        <section className="explanation card" id="panchromatic-history">
           <p>
             Today's black-and-white photos process colours using what we call
             panchromatic mode. Each primary colour of light is treated with the
@@ -17,7 +20,7 @@ function App() {
             sliders.
           </p>
         </section>
-        <section>
+        <section className="card">
           <ImagePlayground />
         </section>
       </main>

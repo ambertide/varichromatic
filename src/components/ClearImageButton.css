@@ -1,0 +1,13 @@
+.clear-image-button {
+  margin-left: 1em;
+  margin-right: 1em;
+  border: none;
+  background-color: var(--cinnabar);
+  color: var(--lavendar-blush);
+  font-size: large;
+  padding: .25em;
+}
+
+.clear-image-button:disabled {
+  opacity: 40%;
+}

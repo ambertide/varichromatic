@@ -1,5 +1,10 @@
 div.rendererWrapper canvas {
-    flex: 1;
     max-width: 512px;
     min-width: 256px;
+}
+
+div.rendererWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -8,17 +8,9 @@ interface ImageViewerProps {
   image: ImageData;
   resetImage: () => void;
 }
-export function ImageViewer({
-  colourWeights,
-  image,
-  resetImage,
-}: ImageViewerProps) {
+export function ImageViewer({ colourWeights, image }: ImageViewerProps) {
   const { viewport, renderScene } = useShader(image, colourWeights);
   const rendererWrapper = useRef<HTMLDivElement>(null);
-  const onResetImage = useCallback(() => {
-    resetImage();
-    URL.revokeObjectURL(image.url);
-  }, [resetImage, image]);
   useEffect(() => {
     if (rendererWrapper.current !== null) {
       // Calculate how much the canvas was scaled by.
@@ -30,7 +22,6 @@ export function ImageViewer({
   return (
     <div className="image-viewer">
       <div ref={rendererWrapper} className="rendererWrapper" />
-      <button onClick={onResetImage}>Clear Image</button>
     </div>
   );
 }

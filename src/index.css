@@ -1,4 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto+Slab&display=swap');
+:root {
+  --persian-green: #1b998b;
+  --gunmetal: #2b303a;
+  --lavendar-blush: #eee5e9;
+  --cinnabar: #d64933;
+  --beaver: #a17c6b;
+}
 body {
+  background-color: var(--gunmetal);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -12,17 +21,6 @@ code {
     monospace;
 }
 
-.App {
-  width: inherit;
-  height: inherit;
-  display: flex;
-  justify-content: center;
-}
-
-.app-wrapper {
-  width: 50%;
-  min-width: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+p, button, legend {
+  font-family: 'Roboto Slab', serif;
 }

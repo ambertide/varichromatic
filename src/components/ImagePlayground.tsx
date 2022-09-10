@@ -3,6 +3,7 @@ import { useImageData, useColourWeights } from "../hooks";
 import { ImageSelector } from "./ImageSelector";
 import { ImageViewer } from "./ImageViewer";
 import { ShaderSettings } from "./ShaderSettings";
+import { ClearImageButton } from "./ClearImageButton";
 
 /**
  * A component that allows the user to upload or see an image after upload
@@ -14,16 +15,25 @@ export function ImagePlayground() {
   const { weights, ...weightFunctions } = useColourWeights();
   return (
     <section className="image-playground">
-      {isImageEmpty ? (
-        <ImageSelector setImage={setImage} />
-      ) : (
-        <ImageViewer
-          resetImage={resetImage}
+      <div className="image-viewport">
+        {isImageEmpty ? (
+          <ImageSelector setImage={setImage} />
+        ) : (
+          <ImageViewer
+            resetImage={resetImage}
+            image={image}
+            colourWeights={weights}
+          />
+        )}
+      </div>
+      <div className="settings">
+        <ShaderSettings colourWeights={weights} {...weightFunctions} />
+        <ClearImageButton
           image={image}
-          colourWeights={weights}
+          resetImage={resetImage}
+          disabled={isImageEmpty}
         />
-      )}
-      <ShaderSettings colourWeights={weights} {...weightFunctions} />
+      </div>
     </section>
   );
 }
