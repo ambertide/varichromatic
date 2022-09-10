@@ -1,0 +1,16 @@
+.image-selector {
+  box-sizing: content-box;
+  min-width: 256px;
+  min-height: 256px;
+  max-width: 512px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-style: dotted;
+  border-color: black;
+  flex: 1;
+}
+
+.image-selector input {
+  text-decoration: none;
+}

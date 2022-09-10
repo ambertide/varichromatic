@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useEffect } from "react";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import BlackWhiteFragmentationShader from "../shaders/blackwhite.glsl";
 import {
@@ -12,7 +12,7 @@ import {
   Vector2,
   Vector3,
 } from "three";
-import { ImageData } from "../types/ImageData";
+import { ImageData, ColourWeightData } from "../types";
 
 interface UseShaderReturn {
   viewport: HTMLCanvasElement;
@@ -23,14 +23,21 @@ interface UseShaderReturn {
  * Get the shader to put on the sprite
  * @param imageURL base image for texture.
  */
-function getShaderMaterial(image: ImageData): ShaderMaterial {
+function getShaderMaterial(
+  image: ImageData,
+  colourWeights?: ColourWeightData
+): ShaderMaterial {
   const texture = new TextureLoader().load(image.url);
   const textureWidth = image.width || 1;
   const textureHeight = image.height || 1;
   const uniforms = {
     texture,
     textureResolution: new Vector2(textureWidth, textureHeight),
-    colorChannelBalances: new Vector3(1.0, 1.0, 1.0),
+    colorChannelBalances: new Vector3(
+      colourWeights?.red || 1.0,
+      colourWeights?.green || 1.0,
+      colourWeights?.blue || 1.0
+    ),
   };
   return new ShaderMaterial({
     fragmentShader: BlackWhiteFragmentationShader,
@@ -44,18 +51,21 @@ function getShaderMaterial(image: ImageData): ShaderMaterial {
 
 /**
  * Use a shader.
- * @param imageURL
- * @param viewWidth
- * @param viewHeight
+ * @param image data about the image
+ * @param colourWeights weights of each colour channel
  * @returns
  */
-export function useShader(image: ImageData): UseShaderReturn {
+export function useShader(
+  image: ImageData,
+  colourWeights: ColourWeightData
+): UseShaderReturn {
   // Construct the renderer.
-  const [renderer, scene, camera] = useMemo(() => {
+  const [renderer, scene, camera, shader] = useMemo(() => {
+    console.log("hi.");
     const scene = new Scene();
-    const material = getShaderMaterial(image);
+    const shader = getShaderMaterial(image);
     const plane = new PlaneGeometry(image.width, image.height);
-    scene.add(new Mesh(plane, material));
+    scene.add(new Mesh(plane, shader));
     // Add the camera.
     const camera = new OrthographicCamera(
       image.width / -2,
@@ -69,13 +79,22 @@ export function useShader(image: ImageData): UseShaderReturn {
     scene.add(camera);
     const renderer = new WebGLRenderer();
     renderer.setSize(image.width, image.height);
-    return [renderer, scene, camera];
+    return [renderer, scene, camera, shader];
   }, [image]);
 
   const renderScene = useCallback(() => {
     requestAnimationFrame(renderScene);
     renderer.render(scene, camera);
   }, [renderer, scene, camera]);
+
+  useEffect(() => {
+    console.log(colourWeights);
+    shader.uniforms.colorChannelBalances.value = new Vector3(
+      colourWeights.red,
+      colourWeights.green,
+      colourWeights.blue
+    );
+  }, [colourWeights]);
 
   return {
     viewport: renderer.domElement,

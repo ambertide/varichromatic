@@ -1,14 +1,19 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useShader } from "../hooks/useShader";
-import { ImageData } from "../types/ImageData";
+import { ImageData, ColourWeightData } from "../types";
 import "./ImageViewer.css";
 
 interface ImageViewerProps {
+  colourWeights: ColourWeightData;
   image: ImageData;
   resetImage: () => void;
 }
-export function ImageViewer({ image, resetImage }: ImageViewerProps) {
-  const { viewport, renderScene } = useShader(image);
+export function ImageViewer({
+  colourWeights,
+  image,
+  resetImage,
+}: ImageViewerProps) {
+  const { viewport, renderScene } = useShader(image, colourWeights);
   const rendererWrapper = useRef<HTMLDivElement>(null);
   const onResetImage = useCallback(() => {
     resetImage();

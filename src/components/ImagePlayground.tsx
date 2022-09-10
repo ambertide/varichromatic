@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import "./ImagePlayground.css";
 import { useImageData, useColourWeights } from "../hooks";
 import { ImageSelector } from "./ImageSelector";
 import { ImageViewer } from "./ImageViewer";
@@ -17,7 +17,11 @@ export function ImagePlayground() {
       {isImageEmpty ? (
         <ImageSelector setImage={setImage} />
       ) : (
-        <ImageViewer resetImage={resetImage} image={image} />
+        <ImageViewer
+          resetImage={resetImage}
+          image={image}
+          colourWeights={weights}
+        />
       )}
       <ShaderSettings colourWeights={weights} {...weightFunctions} />
     </section>

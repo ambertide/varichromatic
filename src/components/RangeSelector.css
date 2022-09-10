@@ -1,4 +1,13 @@
-.range-selector {
+.range-selector fieldset {
+  border: none;
+}
+
+.range-selector legend {
+  margin-bottom: .1em;
+}
+
+.range-selector .input-group {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 1em;
 }

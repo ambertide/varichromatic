@@ -14,19 +14,22 @@ export function ShaderSettings({
   setGreen,
   setBlue,
 }: ShaderSettingsProps) {
+  const colours: ["red" | "green" | "blue", (w: number) => void][] = [
+    ["red", setRed],
+    ["green", setGreen],
+    ["blue", setBlue],
+  ];
   return (
     <div className="shader-settings">
-      <RangeSelector value={colourWeights.red} name="red" setValue={setRed} />
-      <RangeSelector
-        value={colourWeights.green}
-        name="green"
-        setValue={setGreen}
-      />
-      <RangeSelector
-        value={colourWeights.blue}
-        name="blue"
-        setValue={setBlue}
-      />
+      {colours.map(([colour, setWeight]) => (
+        <RangeSelector
+          label={`Sensitivity to ${colour}`}
+          value={colourWeights[colour]}
+          name={colour}
+          setValue={setWeight}
+          key={colour}
+        />
+      ))}
     </div>
   );
 }
