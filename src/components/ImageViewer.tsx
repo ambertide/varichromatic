@@ -7,8 +7,7 @@ interface ImageViewerProps {
   image: ImageData;
   resetImage: () => void;
 }
-export function ImageViewer(props: ImageViewerProps) {
-  const { image, resetImage } = props;
+export function ImageViewer({ image, resetImage }: ImageViewerProps) {
   const { viewport, renderScene } = useShader(image);
   const rendererWrapper = useRef<HTMLDivElement>(null);
   const onResetImage = useCallback(() => {

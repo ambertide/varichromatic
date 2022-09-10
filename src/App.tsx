@@ -1,23 +1,26 @@
-import React, { useCallback, useState } from "react";
-import { ImageSelector } from "./components/ImageSelector";
-import { ImageViewer } from "./components/ImageViewer";
-import { ImageData } from "./types/ImageData";
 import "./App.css";
-
-const emptyImageData = { url: "", width: 0, height: 0 };
+import { ImagePlayground } from "./components";
 
 function App() {
-  const [image, setImage] = useState<ImageData>(emptyImageData);
-  const resetImage = useCallback(() => {
-    setImage(emptyImageData);
-  }, [setImage]);
   return (
     <div className="App">
-      {image.url === "" ? (
-        <ImageSelector setImage={setImage} />
-      ) : (
-        <ImageViewer resetImage={resetImage} image={image} />
-      )}
+      <main className="app-wrapper">
+        <section className="explanation" id="panchromatic-history">
+          <p>
+            Today's black-and-white photos process colours using what we call
+            panchromatic mode. Each primary colour of light is treated with the
+            same weight, back in the old days, this was not the case!
+          </p>
+          <p>
+            You can try to emulate what it looks like when we give different
+            weights to different colours by uploading an image and playing with
+            sliders.
+          </p>
+        </section>
+        <section>
+          <ImagePlayground />
+        </section>
+      </main>
     </div>
   );
 }
