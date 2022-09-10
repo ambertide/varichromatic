@@ -1,0 +1,19 @@
+{
+  "socials": [
+    {
+      "type": "github",
+      "value": "ambertide",
+      "baseURL": "https://github.com/"
+    },
+    {
+      "type": "linkedin",
+      "value": "egeozkan",
+      "baseURL": "https://linkedin.com/in/"
+    },
+    {
+      "type": "twitter",
+      "value": "EAmbertide",
+      "baseURL": "https://twitter.com/"
+    }
+  ]
+}

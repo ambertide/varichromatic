@@ -1,0 +1,15 @@
+.socials {
+  text-align: center;
+  font-size: 30px;
+  letter-spacing: 1ch;
+
+}
+
+.socials a {
+  color: var(--gunmetal);
+}
+
+.socials a:hover {
+  transition: 1s;
+  color: var(--cinnabar);
+}

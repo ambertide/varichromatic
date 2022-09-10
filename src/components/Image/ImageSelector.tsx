@@ -1,6 +1,6 @@
 import "./ImageSelector.css";
-import { useImageUpload } from "../hooks/useImageUpload";
-import { ImageData } from "../types/ImageData";
+import { useImageUpload } from "../../hooks";
+import { ImageData } from "../../types";
 
 interface ImageSelectorProps {
   setImage: (data: ImageData) => void;

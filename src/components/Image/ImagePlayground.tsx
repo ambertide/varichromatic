@@ -1,5 +1,5 @@
 import "./ImagePlayground.css";
-import { useImageData, useColourWeights } from "../hooks";
+import { useImageData, useColourWeights } from "../../hooks";
 import { ImageSelector } from "./ImageSelector";
 import { ImageViewer } from "./ImageViewer";
 import { ShaderSettings } from "./ShaderSettings";

@@ -1,5 +1,6 @@
 import "./App.css";
-import { ImagePlayground } from "./components";
+import { ImagePlayground, SocialsList } from "./components";
+import socialsList from "./static/socials.json";
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
         </section>
         <section className="card">
           <ImagePlayground />
+        </section>
+        <section className="card">
+          <SocialsList socials={socialsList.socials} />
         </section>
       </main>
     </div>

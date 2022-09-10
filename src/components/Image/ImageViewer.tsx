@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef } from "react";
-import { useShader } from "../hooks/useShader";
-import { ImageData, ColourWeightData } from "../types";
+import { useEffect, useRef } from "react";
+import { useShader } from "../../hooks/useShader";
+import { ImageData, ColourWeightData } from "../../types";
 import "./ImageViewer.css";
 
 interface ImageViewerProps {

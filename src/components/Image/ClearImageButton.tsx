@@ -1,6 +1,6 @@
 import "./ClearImageButton.css";
 import { useCallback } from "react";
-import { ImageData } from "../types";
+import { ImageData } from "../../types";
 
 interface ClearImageButtonProps {
   image: ImageData;

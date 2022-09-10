@@ -1,4 +1,4 @@
-import { ColourWeightData } from "../types/ColourWeightData";
+import { ColourWeightData } from "../../types";
 import { RangeSelector } from "./RangeSelector";
 
 interface ShaderSettingsProps {
